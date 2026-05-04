@@ -1,3 +1,4 @@
 .env
 __pycache__/
 *.pyc
+venv/lib/python3.11/site-packages/setuptools/_vendor/platformdirs/py.typed
