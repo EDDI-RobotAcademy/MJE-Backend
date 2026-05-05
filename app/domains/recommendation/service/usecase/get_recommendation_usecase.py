@@ -81,6 +81,7 @@ class GetRecommendationUseCase:
             collection.restaurants,
             collection.cafes,
             collection.activities,
+            dto.start_time,
         )
 
         transport = Transport(dto.transport)
