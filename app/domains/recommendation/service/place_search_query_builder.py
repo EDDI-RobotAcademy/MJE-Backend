@@ -34,7 +34,7 @@ _CAFE_TEMPLATES = [
 
 _ACTIVITY_TEMPLATES: Dict[str, List[str]] = {
     ActivityKind.EXHIBITION.value: ["{area} 전시", "{area} 미술관"],
-    ActivityKind.WALK.value: ["{area} 산책", "{area} 공원"],
+    ActivityKind.WALK.value: ["{area} 공원", "{area} 산책로"],
     ActivityKind.SHOPPING.value: ["{area} 쇼핑", "{area} 편집샵"],
     ActivityKind.POPUP.value: ["{area} 팝업스토어"],
     ActivityKind.WORKSHOP.value: ["{area} 공방", "{area} 체험"],

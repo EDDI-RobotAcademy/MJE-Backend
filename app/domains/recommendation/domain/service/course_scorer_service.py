@@ -54,13 +54,14 @@ class CourseScorerService:
         activity_places = [p for p in ordered_result.places if p.place_type == PlaceType.ACTIVITY]
         if not activity_places:
             return 3
-        scores = [
-            _TIMESLOT_ACTIVITY_SCORES[time_slot][p.place.activity_kind.activity_type]
-            if p.place.activity_kind is not None
-            else 3
+        # 나이트라이프(SUB)가 하나라도 있으면 SUB 기준으로 채점 — 낮 시간대 페널티 적용
+        has_sub = any(
+            p.place.activity_kind is not None
+            and p.place.activity_kind.activity_type == ActivityType.SUB_ACTIVITY
             for p in activity_places
-        ]
-        return max(scores)
+        )
+        key = ActivityType.SUB_ACTIVITY if has_sub else ActivityType.CORE_ACTIVITY
+        return _TIMESLOT_ACTIVITY_SCORES[time_slot][key]
 
     def _diversity_score(self, ordered_result: OrderedCourseResult) -> int:
         activity_places = [p for p in ordered_result.places if p.place_type == PlaceType.ACTIVITY]

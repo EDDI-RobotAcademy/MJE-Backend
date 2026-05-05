@@ -22,6 +22,19 @@ _KR_LAT_RANGE = (33.0, 39.0)
 _HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
 _logger = logging.getLogger(__name__)
 
+# 검색 결과에서 제외할 카테고리 키워드 (데이트 코스와 무관한 업종)
+_CATEGORY_BLACKLIST = frozenset([
+    "반려동물", "애견", "동물병원", "수의사", "동물",
+    "병원", "의원", "약국", "한의원", "치과",
+    "부동산", "공인중개", "법무사", "변호사", "세무",
+    "주유소", "세차", "자동차",
+    "편의점", "마트", "슈퍼마켓",
+])
+
+
+def _is_blacklisted_category(category: str) -> bool:
+    return any(bad in category for bad in _CATEGORY_BLACKLIST)
+
 
 def _parse_wgs84(mapx: str, mapy: str) -> Optional[Tuple[float, float]]:
     try:
@@ -151,6 +164,9 @@ class PlaceCandidateCollector:
             for raw in raw_items:
                 address = raw.road_address or raw.address
                 if not address:
+                    continue
+
+                if _is_blacklisted_category(raw.category):
                     continue
 
                 name = _strip_html(raw.title)
