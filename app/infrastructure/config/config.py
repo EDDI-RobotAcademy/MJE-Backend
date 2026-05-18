@@ -13,11 +13,6 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379"
     CORS_ORIGINS: list[str] = []
     KAKAO_MAP_REST_API_KEY: str = ""
-    SMTP_HOST: str = "smtp.gmail.com"
-    SMTP_PORT: int = 587
-    SMTP_USER: str = ""
-    SMTP_PASSWORD: str = ""
-    EMAIL_FROM: str = ""
     SERVICE_NAME: str = "MJE"
 
     model_config = SettingsConfigDict(
