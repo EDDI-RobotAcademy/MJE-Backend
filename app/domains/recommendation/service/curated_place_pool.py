@@ -449,6 +449,7 @@ _APGUJEONG_PLACES: List[CuratedPlaceConfig] = [
     CuratedPlaceConfig("딸랏", PlaceType.RESTAURANT),
     CuratedPlaceConfig("센자이료쿠", PlaceType.RESTAURANT),
     CuratedPlaceConfig("오레노이키루미치 압구정본점", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("부베트 서울", PlaceType.RESTAURANT),
     # 카페
     CuratedPlaceConfig("아가젤라또 압구정점", PlaceType.CAFE),
     CuratedPlaceConfig("젠제로 압구정점", PlaceType.CAFE),
@@ -457,11 +458,65 @@ _APGUJEONG_PLACES: List[CuratedPlaceConfig] = [
     CuratedPlaceConfig("카멜커피 도산1호점", PlaceType.CAFE),
     CuratedPlaceConfig("런던베이글뮤지엄 도산점", PlaceType.CAFE),
     CuratedPlaceConfig("브로트아트 청담점", PlaceType.CAFE, latitude=37.527198, longitude=127.041902),
+    CuratedPlaceConfig("천장지구 서울", PlaceType.CAFE),
+    CuratedPlaceConfig("Bitte Dosan", PlaceType.CAFE),
+    # Activity - 칵테일바/와인바/바 (BAR)
+    CuratedPlaceConfig("Laputa Seoul", PlaceType.ACTIVITY, ActivityKind.BAR),
+    # Activity - 산책 (WALK)
+    CuratedPlaceConfig("잠원한강공원", PlaceType.ACTIVITY, ActivityKind.WALK),
+    # Activity - 쇼핑 (SHOPPING)
+    CuratedPlaceConfig("위글위글집 도산", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
+    CuratedPlaceConfig("Stick With Me", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
+    # Activity - 전시/문화 (EXHIBITION)
+    CuratedPlaceConfig("4233마음센터 압구정점", PlaceType.ACTIVITY, ActivityKind.EXHIBITION),
 ]
 
 _CHEONGDAM_PLACES: List[CuratedPlaceConfig] = [
+    # 레스토랑
+    CuratedPlaceConfig("피플더테라스", PlaceType.RESTAURANT),
     # 카페
     CuratedPlaceConfig("무니", PlaceType.CAFE),
+]
+
+_JAMSIL_PLACES: List[CuratedPlaceConfig] = [
+    # 레스토랑
+    CuratedPlaceConfig("미즈컨테이너 잠실", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("칸다소바 롯데월드몰점", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("파오파오 새마을시장본점", PlaceType.RESTAURANT),
+    # 카페
+    CuratedPlaceConfig("마주이", PlaceType.CAFE),
+    # Activity - 쇼핑 (SHOPPING)
+    CuratedPlaceConfig("롯데월드몰", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
+    # Activity - 칵테일바/이자카야 (BAR)
+    CuratedPlaceConfig("탄포포", PlaceType.ACTIVITY, ActivityKind.BAR),
+]
+
+_MANGWON_PLACES: List[CuratedPlaceConfig] = [
+    # 레스토랑
+    CuratedPlaceConfig("신세카이 망원", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("류진 망원", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("희옥 망원", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("묘내", PlaceType.RESTAURANT),
+    CuratedPlaceConfig("베우노 망원", PlaceType.RESTAURANT),
+    # 카페
+    CuratedPlaceConfig("필담 망원", PlaceType.CAFE),
+    CuratedPlaceConfig("모을 망원", PlaceType.CAFE),
+    CuratedPlaceConfig("스몰커피바", PlaceType.CAFE),
+    CuratedPlaceConfig("올웨이즈어거스트 망원", PlaceType.CAFE),
+    CuratedPlaceConfig("로잉커피바 망원", PlaceType.CAFE),
+    CuratedPlaceConfig("한강에스프레소 망원", PlaceType.CAFE),
+    CuratedPlaceConfig("필리커피 망원", PlaceType.CAFE),
+    CuratedPlaceConfig("HHSS하우스", PlaceType.CAFE),
+    # Activity - 칵테일바/와인바/이자카야 (BAR)
+    CuratedPlaceConfig("코우콘", PlaceType.ACTIVITY, ActivityKind.BAR),
+    CuratedPlaceConfig("로바타우직 망원", PlaceType.ACTIVITY, ActivityKind.BAR),
+    CuratedPlaceConfig("다이치 망원", PlaceType.ACTIVITY, ActivityKind.BAR),
+    CuratedPlaceConfig("능소화 와인바 망원", PlaceType.ACTIVITY, ActivityKind.BAR),
+    # Activity - 쇼핑 (SHOPPING)
+    CuratedPlaceConfig("프레젠트모먼트 망원", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
+    CuratedPlaceConfig("호코리상점 망원", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
+    CuratedPlaceConfig("크로우캐년 망원", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
+    CuratedPlaceConfig("홍대널판 망원", PlaceType.ACTIVITY, ActivityKind.SHOPPING),
 ]
 
 _CURATED_BY_AREA: Dict[str, List[CuratedPlaceConfig]] = {
@@ -493,6 +548,12 @@ _CURATED_BY_AREA: Dict[str, List[CuratedPlaceConfig]] = {
     "압구정역": _APGUJEONG_PLACES,
     "청담": _CHEONGDAM_PLACES,
     "청담동": _CHEONGDAM_PLACES,
+    "잠실": _JAMSIL_PLACES,
+    "잠실동": _JAMSIL_PLACES,
+    "잠실역": _JAMSIL_PLACES,
+    "망원": _MANGWON_PLACES,
+    "망원동": _MANGWON_PLACES,
+    "망원역": _MANGWON_PLACES,
 }
 
 
