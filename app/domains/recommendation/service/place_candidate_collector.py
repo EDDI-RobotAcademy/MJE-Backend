@@ -306,35 +306,6 @@ class PlaceCandidateCollector:
         coord_configs = [c for c in configs if c.latitude is not None]
         api_configs = [c for c in configs if c.latitude is None]
 
-        for config in coord_configs:
-            activity_type = config.activity_kind.activity_type.value if config.activity_kind else None
-            place_key = f"{config.search_query}|coords:{config.latitude},{config.longitude}"
-            if place_key in seen:
-                continue
-            seen.add(place_key)
-            place = Place(
-                name=config.search_query,
-                area=area,
-                category=config.place_type.value,
-                address="",
-                road_address="",
-                latitude=config.latitude,
-                longitude=config.longitude,
-                search_rank=1,
-                keywords=[],
-                activity_type=activity_type,
-                score=CURATED_SCORE,
-                place_key=place_key,
-                link="",
-                telephone="",
-            )
-            if config.place_type == PlaceType.RESTAURANT:
-                restaurants.append(place)
-            elif config.place_type == PlaceType.CAFE:
-                cafes.append(place)
-            else:
-                activities.append(place)
-
         def _fetch_one(config):
             try:
                 raw_items = self._client.search_places(config.search_query, 1)
@@ -343,6 +314,57 @@ class PlaceCandidateCollector:
                 _logger.error("[Curated] error: query=%r error=%r", config.search_query, str(e))
                 return config, None
 
+        # 좌표가 있는 장소: 카카오에서 주소만 가져오고 좌표는 하드코딩 값 사용
+        with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+            for config, raw in executor.map(_fetch_one, coord_configs):
+                activity_type = config.activity_kind.activity_type.value if config.activity_kind else None
+
+                if raw is not None and (raw.road_address or raw.address):
+                    road_addr = raw.road_address or ""
+                    addr = raw.address or ""
+                    tokens = (road_addr or addr).split()
+                    area_token = tokens[1] if len(tokens) > 1 else (tokens[0] if tokens else area)
+                    keywords = [k.strip() for k in raw.category.split(">") if k.strip()]
+                    place_key = f"{raw.title}|{road_addr or addr}"
+                    link = raw.link
+                    telephone = raw.telephone
+                else:
+                    road_addr = ""
+                    addr = ""
+                    area_token = area
+                    keywords = []
+                    place_key = f"{config.search_query}|coords:{config.latitude},{config.longitude}"
+                    link = ""
+                    telephone = ""
+
+                if place_key in seen:
+                    continue
+                seen.add(place_key)
+
+                place = Place(
+                    name=config.search_query,
+                    area=area_token,
+                    category=config.place_type.value,
+                    address=addr,
+                    road_address=road_addr,
+                    latitude=config.latitude,
+                    longitude=config.longitude,
+                    search_rank=1,
+                    keywords=keywords,
+                    activity_type=activity_type,
+                    score=CURATED_SCORE,
+                    place_key=place_key,
+                    link=link,
+                    telephone=telephone,
+                )
+                if config.place_type == PlaceType.RESTAURANT:
+                    restaurants.append(place)
+                elif config.place_type == PlaceType.CAFE:
+                    cafes.append(place)
+                else:
+                    activities.append(place)
+
+        # 좌표가 없는 장소: 카카오 검색 결과 그대로 사용
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
             for config, raw in executor.map(_fetch_one, api_configs):
                 if raw is None or not (raw.road_address or raw.address):
